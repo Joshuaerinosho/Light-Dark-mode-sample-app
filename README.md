@@ -1,4 +1,4 @@
-# simple Light/Dark mode in Flutter
+# Simple Light/Dark mode in Flutter
 
 
 
