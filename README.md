@@ -1,6 +1,6 @@
-# sample
+# simple Light/Dark mode in Flutter
 
-A new Flutter project.
+
 
 ## Getting Started
 
