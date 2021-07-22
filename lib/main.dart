@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sample/Themes.dart';
-
+import 'package:sample/theme_provider.dart';
+import 'package:sample/widgets.dart';
 import 'constants.dart';
 
 void main() {
@@ -13,39 +15,56 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool isDark = false;
+  bool isOn = true;
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Color test',
-      theme: isDark ? darkTheme : lightTheme,
-      darkTheme: darkTheme,
-      home: Builder(
-        builder: (context) => Scaffold(
-            backgroundColor: Theme.of(context).backgroundColor,
-            appBar: AppBar(
-              title: Text('Background Color Test'),
-              centerTitle: true,
-              backgroundColor: Theme.of(context).primaryColor,
-            ),
-            body: SafeArea(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: mainAxisAlignment,
-                  children: [
-                    RoundButton(
-                      key: ValueKey('Button'),
-                      onTap: () {
-                        setState(() {
-                          isDark = !isDark;
-                        });
-                      },
-                      icon: isDark ? Icons.light_mode : Icons.dark_mode,
-                    )
-                  ],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => ThemeProvider(),
+        ),
+      ],
+      child: Consumer<ThemeProvider>(
+        builder: (ctx, themeObject, _) => MaterialApp(
+          title: 'Color test',
+          themeMode: themeObject.mode,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          home: Builder(builder: (context) {
+            final bool _darkModeEnabled =
+                Theme.of(context).brightness == Brightness.dark;
+            _darkModeEnabled ? isOn = false : isOn = true;
+            return Scaffold(
+                key: ValueKey('main page'),
+                backgroundColor: Theme.of(context).backgroundColor,
+                appBar: AppBar(
+                  title: Text('Background Color Test'),
+                  centerTitle: true,
+                  backgroundColor: Theme.of(context).primaryColor,
                 ),
-              ),
-            )),
+                body: SafeArea(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: mainAxisAlignment,
+                      children: [
+                        RoundButton(
+                          key: ValueKey('Button'),
+                          onTap: () {
+                            Provider.of<ThemeProvider>(context, listen: false)
+                                .toggleMode();
+                            setState(() {
+                              isOn ? isOn = false : isOn = true;
+                            });
+                          },
+                          icon: isOn ? Icons.dark_mode : Icons.light_mode,
+                        )
+                      ],
+                    ),
+                  ),
+                ));
+          }),
+        ),
       ),
     );
   }
