@@ -18,48 +18,15 @@ void main() {
   tearDownAll(() {
     driver.close();
   });
-  group('Menu Test', () {
-    final newAssetButton = find.byValueKey('NewAssetButton');
-    final searchButton = find.byValueKey('SearchButton');
-    final searchScreenContent = find.byValueKey('search screen');
-
-    test('Checks first screen is assets screen', () async {
-      await driver.waitFor(find.byValueKey('dropdown'));
-    });
-
-    test('Navigate to search screen', () async {
-      await driver.tap(searchButton);
-      //checks the content on search screen
-      await driver.getText(searchScreenContent);
-    });
-
-    test('Navigate back to assets screen', () async {
-      await driver.tap(newAssetButton);
-      //checks the content on assets screen
-      await driver.waitFor(find.byValueKey('dropdown'));
-    });
-  });
 
   group('Theme Test', () {
-    //final lightThemeButton = find.text('Light theme');
-    final darkThemeButton = find.text('Dark theme');
-    final settingsButton = find.byValueKey('SettingsButton');
+    final themeButton = find.byValueKey('Button');
     final themeProvider = ThemeProvider();
 
-   
-    test('Check background theme', ()async{
-     expect(themeProvider.mode, ThemeMode.light);
-     await driver.tap(settingsButton);
-     await driver.tap(darkThemeButton);
-     expect(themeProvider.mode, ThemeMode.dark);
+    test('Switch between light and dark themes', () async {
+      expect(themeProvider.mode, ThemeMode.light); //check initial theme
+      await driver.tap(themeButton);
+      expect(themeProvider.mode, ThemeMode.dark);  //check new theme
     });
-
-    // test('Switch between light and dark themes', () async {
-    //   await driver.tap(settingsButton);
-    //   await driver.getText(darkThemeButton);
-    //   await driver.tap(find.byValueKey('ThemeButton'));
-    //   await driver.getText(lightThemeButton);
-    // });
-    
   });
 }
