@@ -5,7 +5,7 @@ import 'package:sample/widgets.dart';
 
 void main() {
 
-  testWidgets("Check Scaffold backGround Color", (tester) async {
+  testWidgets("Check Scaffold background Color", (tester) async {
     await tester.pumpWidget(MyApp());
 
     //check initial background color
