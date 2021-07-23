@@ -1,6 +1,4 @@
-# Simple Light/Dark mode in Flutter
-
-
+# A simple Light/Dark mode in Flutter using Provider
 
 ## Screenshots
 <p align= "center">
