@@ -12,7 +12,7 @@ void main() {
     expect((tester.firstWidget(find.byType(Scaffold))as
      Scaffold).backgroundColor, Colors.white);
 
-     //taps the theme switch button
+     //tap theme switch button
      await tester.tap(find.byType(RoundButton));
      await tester.pumpAndSettle();
 
